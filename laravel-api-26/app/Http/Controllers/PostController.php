@@ -32,7 +32,7 @@ class PostController extends Controller
             'title' => 'required',
             'body' => "required|string|min:2",
         ]);
-        $data['author_id'] = 1;
+        $data['author_id'] = $request->user()->id;
 
         $post = Post::create($data);
         return response()->json($post, 201);
