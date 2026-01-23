@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -12,15 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return [
-            'message' => 'hello',
-            'status' => 'success',
-            'data' => [
-                'id' => 1,
-                'Title' => 'Test One',
-                'body' => 'Post body'
-            ]
-        ];
+        return PostResource::collection(Post::paginate(1));
     }
 
     /**
@@ -45,7 +38,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        return response()->json($post);
+        return new PostResource($post);
     }
 
     /**
